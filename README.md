@@ -41,6 +41,7 @@ device_type = "speaker"
 ```
 
 ### Modify path in .env file
+Replace YOURUSERNAME by your current username.
 
 ## Start container using docker-compose
 ```bash
