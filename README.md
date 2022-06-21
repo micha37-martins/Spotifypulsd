@@ -40,6 +40,8 @@ volume_normalisation = false
 device_type = "speaker"
 ```
 
+### Modify path in .env file
+
 ## Start container using docker-compose
 ```bash
 $ MY_UID="$(id -u)" MY_GID="$(id -g)" docker-compose up
