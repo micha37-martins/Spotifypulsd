@@ -19,14 +19,31 @@ show up as a device that can be controlled from the official clients.
 Spotifyd requires a Spotify Premium account.
 
 ## Host setup
+Your host need to have a working audio setup with a running pulseaudio server.
+How to do this is depending on your Linux distribution and have to be explored
+on your own. You can get a good overview of the Linux audio system by reading the
+Arch wiki:
+- https://wiki.archlinux.org/title/Sound_system
+- https://wiki.archlinux.org/title/PulseAudio
+
 ### Setup pulseaudio socket
-Add sock for spotifyd to: 
+Add socket for spotifyd to: 
 
 `~/.config/pulse/default.pa`
 
+```
 load-module module-native-protocol-unix auth-group=audio socket=/tmp/pa_containers.socket
+```
 
-##### Example `spotifyd.conf`
+> If you do not have the `default.pa` create it and add the following at the first line:
+> 
+>`.include /etc/pulse/default.pa`
+
+### Spotifyd config
+The config can be modified according to your needs as nothing is mandatory. The
+following is an example you can use to get started:
+
+`~/.config/spotifyd/spotifyd.conf`
 ```
 [global]
 username = "YOURUSERNAME"
@@ -39,9 +56,11 @@ volume_controller = "alsa"
 volume_normalisation = false
 device_type = "speaker"
 ```
+> Detailed information to the configuration:  
+> https://spotifyd.github.io/spotifyd/config/File.html
 
 ### Modify path in .env file
-Replace YOURUSERNAME by your current username.
+Replace YOURUSERNAME by your current username to point to your spotifyd.conf.
 
 ## Start container using docker-compose
 ```bash
@@ -60,11 +79,18 @@ Alternative to create socket
 If you do not want to  or cannot set up the socket in pulseaudio config you can
 use the following command to create a temporary socket:
 
-`$ pactl load-module module-native-protocol-unix socket=/tmp/pa_containers.socket`
+`pactl load-module module-native-protocol-unix socket=/tmp/pa_containers.socket`
+
+> If you cannot create the socket in /tmp try to create it in a separate folder
+> of your home directory. `/home/user/tmp/pa_containers.socket` for example.
+> Remember to also change the paths in the docker-compose.yml
 
 ## Credits
 Thanks to the authors and contributors of https://github.com/Spotifyd/spotifyd
-and https://github.com/GnaphronG/docker-spotifyd
+and https://github.com/GnaphronG/docker-spotifyd for this awesome project!
 
 ## Additional reading
-https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio
+- https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio
+- https://wiki.archlinux.org/title/Sound_system
+- https://wiki.archlinux.org/title/PulseAudio
+- https://joonas.fi/2020/12/audio-in-docker-containers-linux-audio-subsystems-spotifyd/
