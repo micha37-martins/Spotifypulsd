@@ -85,6 +85,12 @@ use the following command to create a temporary socket:
 > of your home directory. `/home/user/tmp/pa_containers.socket` for example.
 > Remember to also change the paths in the docker-compose.yml
 
+Giving the permission to access sound
+`aplay -l`
+aplay: device_list:276: no soundcards found...
+
+sudo adduser YOURUSERNAME audio
+
 ## Credits
 Thanks to the authors and contributors of https://github.com/Spotifyd/spotifyd
 and https://github.com/GnaphronG/docker-spotifyd for this awesome project!
