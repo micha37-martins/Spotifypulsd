@@ -4,9 +4,9 @@ on:
   push:
     # Publish `main` as Docker `latest` image.
     branches:
-      - main
+      - master
     tags:
-      - '*' # Push events to every tag not containing /
+      - '*'  # Push events to every tag not containing /
 
 env:
   REGISTRY: ghcr.io
