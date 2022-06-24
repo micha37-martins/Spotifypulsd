@@ -6,7 +6,7 @@ on:
     branches:
       - main
     tags:
-      - .*
+      - '*' # Push events to every tag not containing /
 
 env:
   REGISTRY: ghcr.io
