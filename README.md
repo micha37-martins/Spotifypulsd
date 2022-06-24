@@ -1,4 +1,4 @@
-# Spotifypulsd :speaker::musical_note: :sunglasses:
+# Spotifypulsed :speaker::musical_note: :sunglasses:
 This is a fork of [docker-spotifyd](https://github.com/GnaphronG/docker-spotifyd).
 
 It helps building a docker container of spotifyd using pulseaudio as backend.
