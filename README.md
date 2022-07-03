@@ -75,6 +75,7 @@ $ MY_UID="$(id -u)" MY_GID="$(id -g)" docker-compose up
 * The device name cannot contain spaces
 
 ## Troubleshooting 
+### Problems with pulseaudio socket
 Alternative to create socket
 If you do not want to  or cannot set up the socket in pulseaudio config you can
 use the following command to create a temporary socket:
@@ -85,11 +86,28 @@ use the following command to create a temporary socket:
 > of your home directory. `/home/user/tmp/pa_containers.socket` for example.
 > Remember to also change the paths in the docker-compose.yml
 
-Giving the permission to access sound
-`aplay -l`
-aplay: device_list:276: no soundcards found...
+### Problems with permissions
+If `aplay -l` returns:
 
+`aplay: device_list:123: no soundcards found...`
+
+Give the permission to access sound:
+```
 sudo adduser YOURUSERNAME audio
+```
+
+### Problems running docker-compose as a daemon (up -d)
+"Could not start audio: Connection refused"
+"Could not write audio: Not connected to PulseAudio"
+
+I had this on a headless Ubuntu server and it turned out that after logging
+out from my ssh session the container was not able to write to pulseaudio socket
+anymore. The solution was found [here](https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session):
+Run docker-compose in a systemd-run wrapper
+```
+systemd-run --scope --user docker-compose up -d
+```
+
 
 ## Credits
 Thanks to the authors and contributors of https://github.com/Spotifyd/spotifyd
